@@ -1,5 +1,5 @@
 def create_app():
-    from flask import Flask, g, request
+    from flask import Flask, g, request, current_app
     from app.routes import routes_bp
     import uuid
     import logging
@@ -14,6 +14,12 @@ def create_app():
 
     app = Flask(__name__)
     app.register_blueprint(routes_bp)
+
+    @app.errorhandler(Exception)
+    def handle_exception(e):
+        current_app.logger.error(f"Unhandled exception: {str(e)}")
+        http_requests_total.labels(method=request.method, endpoint=request.path, status_code="500").inc()
+        return {"error": "Internal Server Error", "request_id": getattr(g, 'request_id', 'no-request-id')}, 500
 
     @app.before_request
     def assign_request_id():
