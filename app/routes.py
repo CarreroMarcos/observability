@@ -23,18 +23,22 @@ def metrics():
 
 @routes_bp.route('/login', methods=['POST'])
 def login():
-    CHAOS_MODE = os.environ.get('CHAOS_MODE')
-    if CHAOS_MODE == "True":
-        time.sleep(2)
-        raise Exception("Database timeout")
-    
-    data = request.get_json()
-    username = data.get('username')
-    password = data.get('password')
-    
-    if username == 'admin' and password == 'password':
-        current_app.logger.info("Login successful")
-        return {"message": "Login successful"}, 200
-    else:
-        current_app.logger.warning("Login failed")
-        return {"message": "Invalid credentials"}, 401
+    try:
+        CHAOS_MODE = os.environ.get('CHAOS_MODE')
+        if CHAOS_MODE == "True":
+            time.sleep(2)
+            raise Exception("Chaos!")
+        
+        data = request.get_json()
+        username = data.get('username')
+        password = data.get('password')
+        
+        if username == 'admin' and password == 'password':
+            current_app.logger.info("Login successful")
+            return {"message": "Login successful"}, 200
+        else:
+            current_app.logger.warning("Login failed")
+            return {"message": "Invalid credentials"}, 401
+    except Exception as e:
+        current_app.logger.error("Exception in login", extra={"error": str(e)})
+        raise  # Re-raise to let the global error handler deal with it

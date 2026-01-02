@@ -4,6 +4,7 @@ def create_app():
     import uuid
     import logging
     import time
+    import traceback
     from app.metrics import http_requests_total, request_latency_seconds
 
     class RequestIdFilter(logging.Filter):
@@ -17,7 +18,11 @@ def create_app():
 
     @app.errorhandler(Exception)
     def handle_exception(e):
-        current_app.logger.error(f"Unhandled exception: {str(e)}")
+        current_app.logger.error("Unhandled exception", extra={
+            "error_details": str(e),
+            "traceback": traceback.format_exc()
+        })
+        g.is_error = True
         http_requests_total.labels(method=request.method, endpoint=request.path, status_code="500").inc()
         return {"error": "Internal Server Error", "request_id": getattr(g, 'request_id', 'no-request-id')}, 500
 
@@ -34,7 +39,8 @@ def create_app():
         method = request.method
         endpoint = request.path
         status_code = response.status_code
-        http_requests_total.labels(method=method, endpoint=endpoint, status_code=status_code).inc()
+        if not getattr(g, 'is_error', False):
+            http_requests_total.labels(method=method, endpoint=endpoint, status_code=status_code).inc()
         request_latency_seconds.labels(method=method, endpoint=endpoint).observe(duration)
         return response
 
