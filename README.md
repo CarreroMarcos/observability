@@ -1,11 +1,10 @@
 # Observability Simulation Lab
 
-Welcome to the Observability Simulation Lab! This repository serves as a hands-on educational environment designed to help users explore and practice concepts of observability in software systems. Whether you're new to observability or looking to deepen your skills, this lab provides practical scenarios for learning and experimentation.
+This repository serves as a personal lab to explore and practice the principles of observability in software systems. It provides a Python-based, hands-on environment designed to simulate real-world scenarios.
 
 ## Features
-- **Simulated Environment:** Realistic scenarios that mimic production environments.
-- **Python-Based Implementation:** Uses Python functionalities to demonstrate observability techniques.
-- **Experiential Learning:** Gain hands-on experience with logs, metrics, traces, and how they work together.
+- **Simulated Scenarios:** Examples designed to mimic production environments.
+- **Python Implementation:** Focused on observability concepts and techniques within Python applications.
 
 ## Getting Started
 1. Clone the repository:
@@ -20,19 +19,15 @@ Welcome to the Observability Simulation Lab! This repository serves as a hands-o
    ```bash
    pip install -r requirements.txt
    ```
-4. Start exploring the simulation lab by running the provided Python scripts.
+4. Explore the simulation by running the provided Python scripts.
 
 ## Objectives
-The primary objectives of this lab include:
-- Understanding the fundamentals of observability.
-- Learning how to implement observability in Python applications.
-- Experimenting with tools and techniques for monitoring, diagnostics, and performance tracking.
+The primary focus of this lab is to facilitate:
+- Understanding of observability fundamentals.
+- Hands-on experimentation with logs, metrics, and traceability.
 
 ## Contributing
-Interested in contributing? Feel free to create issues or open pull requests with suggestions, improvements, or new scenarios.
+This is a personal lab and is not open for contributions at this time.
 
 ## Contact
-For questions or support, reach out at [CarreroMarcos](https://github.com/CarreroMarcos).
-
----
-This repository is open-source and intended for educational purposes.
+For questions, visit the author's profile: [CarreroMarcos](https://github.com/CarreroMarcos).
